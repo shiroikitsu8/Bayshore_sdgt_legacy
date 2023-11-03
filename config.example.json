@@ -1,0 +1,13 @@
+{
+    "shopName": "Bayshore",
+    "timeReleaseId": "Rev.1 ",
+    "country": "IDN",
+	"placeId": "IDN0123",
+	"regionId": "701",
+    "serverIp": "127.0.0.1",
+    "website": 0,
+    "websiteLog": 0,
+    "gameOptions": {
+        "newCardsBanned": 1
+    }
+}

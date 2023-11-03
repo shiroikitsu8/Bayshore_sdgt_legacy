@@ -1,0 +1,11 @@
+node_modules/
+proto/
+!src/proto/
+!src/proto/proto/
+.env
+dist/
+cert.pfx
+key.pem
+config.json
+package-lock.json
+ecosystem.config.js

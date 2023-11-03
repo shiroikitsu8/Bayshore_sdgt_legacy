@@ -1,0 +1,619 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("POSTGRES_URL")
+}
+
+
+// User
+model user {
+    id                          Int                 @id @default(autoincrement())
+
+    accesscode                  String              @unique
+    banned                      Boolean 	        @default(false)
+    uniqueid                    String?             @unique
+    name                        String?
+
+    last_daily_bingo_dt         Int?
+    last_weekly_bingo_dt        String?
+
+    region                      String?
+    old_discord_name            String?
+
+    car                         car[]
+    story                       story[]
+    story_course                storyCourse[]
+    time_trial_time             timeTrialTime[]
+    couse_data                  timeTrialCourseSkill[]
+    special_mode_result         specialModeResult[]
+    challenge_mode_result       challengeModeResult[]
+    theory_data                 theoryData[]
+    theory_course_data          theoryCourseData[]
+    theory_partner_data         theoryPartnerData[]
+    theory_running_pram_data    theoryRunningPramData[]
+    stamp_event                 stampEvent[]
+    timetrial_point             timetrialPoint[]
+}
+
+
+// User Base Data
+model userBase {
+    id                      Int                 @id @default(autoincrement())
+
+    username                String
+    country                 Int                 @default(1)
+    store                   Int                 @default(0)
+    team_id                 Int                 @default(0)
+    total_play              Int                 @default(0)
+    daily_play              Int                 @default(0)
+    day_play                Int                 @default(0)
+    mileage                 Int                 @default(0)
+    asset_version           Int                 @default(0)
+    last_played_date        Int                 @default(0)
+    mytitle_id              Int                 @default(0)
+    mytitle_efffect_id      Int                 @default(0)
+    sticker_id              Int                 @default(0)
+    sticker_effect_id       Int                 @default(0)
+    papercup_id             Int                 @default(0)
+    tachometer_id           Int                 @default(0)
+    aura_id                 Int                 @default(0)
+    aura_color_id           Int                 @default(0)
+    aura_line_id            Int                 @default(0)
+    bgm_id                  Int                 @default(0)
+    keyholder_id            Int                 @default(0)
+    start_menu_bg_id        Int                 @default(0)
+    use_car_id              Int                 @default(0)
+    use_style_car_id        Int                 @default(0)
+    bothwin_count           Int                 @default(0)
+    bothwin_score           Int                 @default(0)
+    subcard_count           Int                 @default(0)
+    vs_history              Int                 @default(0)
+    stamp_key_assign_0      Int                 @default(0)
+    stamp_key_assign_1      Int                 @default(1)
+    stamp_key_assign_2      Int                 @default(2)
+    stamp_key_assign_3      Int                 @default(3)
+    name_change_category    Int                 @default(0)
+    factory_disp            Int                 @default(0)
+    create_date             Int                 @default(0)
+    cash                    Int                 @default(0)
+    dressup_point           Int                 @default(0)
+    avatar_point            Int                 @default(0)
+    total_cash              Int                 @default(0)
+    store_name              String              @default("Bayshore")
+    have_car_cnt            Int                 @default(0)
+    use_ticket              Int                 @default(0)
+
+    mode_rank_data          modeRank            @relation(fields: [mode_rank_data_dbid], references: [id])
+    mode_rank_data_dbid     Int                 @unique
+
+    fulltune_count          Int                 @default(0)
+    total_car_parts_count   Int                 @default(0)
+
+    standby_play_flag       Int?
+    mode_id                 Int?
+    tips_list               String?
+}
+
+
+// Mode Rank
+model modeRank {
+    id                                  Int                 @id @default(autoincrement())
+    
+    story_rank_exp                      Int                 @default(0)
+    story_rank                          Int                 @default(1)
+    time_trial_rank_exp                 Int                 @default(0)
+    time_trial_rank                     Int                 @default(1)
+    online_battle_rank_exp              Int                 @default(500)
+    online_battle_rank                  Int                 @default(1)
+    store_battle_rank_exp               Int                 @default(0)
+    store_battle_rank                   Int                 @default(1)
+    theory_exp                          Int                 @default(0)
+    theory_rank                         Int                 @default(1)
+    pride_group_id                      Int                 @default(1)
+    pride_point                         Int                 @default(0)
+    grade_exp                           Int                 @default(0)
+    grade                               Int                 @default(1)
+    grade_reward_dist                   Int                 @default(1)
+    story_rank_reward_dist              Int                 @default(1)
+    time_trial_rank_reward_dist         Int                 @default(1)
+    online_battle_rank_reward_dist      Int                 @default(1)
+    store_battle_rank_reward_dist       Int                 @default(1)
+    theory_rank_reward_dist             Int                 @default(1)
+    max_attained_online_battle_rank     Int                 @default(1)
+    max_attained_pride_point            Int                 @default(0)
+    is_last_max                         Int                 @default(0)
+
+    user_base                           userBase?
+}
+
+
+// Avatar
+model avatar {
+    id                  Int                 @id @default(autoincrement())
+    
+    sex                 Int                 @default(0)
+    face                Int                 @default(0)
+    eye                 Int                 @default(0)
+    mouth               Int                 @default(0)
+    hair                Int                 @default(0)
+    glasses             Int                 @default(0)
+    face_accessory      Int                 @default(0)
+    body                Int                 @default(0)
+    body_accessory      Int                 @default(0)
+    behind              Int                 @default(0)
+    bg                  Int                 @default(0)
+    effect              Int                 @default(0)
+    special             Int                 @default(0)
+}
+
+
+// Car
+model car {
+    id                      Int                 @id @default(autoincrement())
+    
+    user                    user                @relation(fields: [user_id], references: [id])
+    user_id                 Int
+
+
+    car_id                  Int
+    style_car_id            Int
+    color                   Int
+    bureau                  Int
+    kana                    Int
+    s_no                    Int
+    l_no                    Int
+    car_flag                Int
+    tune_point              Int
+    tune_level              Int                 @default(0)
+    tune_parts              Int
+    infinity_tune           Int                 @default(0)
+    online_vs_win           Int                 @default(0)
+    pickup_seq              Int                 @default(1)
+    purchase_seq            Int                 @default(0)
+    color_stock_list        String
+    color_stock_new_list    String
+    parts_stock_list        String
+    parts_stock_new_list    String
+    parts_set_equip_list    String
+    use_count               Int                 @default(0)
+    story_use_count         Int                 @default(0)
+    timetrial_use_count     Int                 @default(0)
+    vs_use_count            Int                 @default(0)
+    net_vs_use_count        Int                 @default(0)
+    theory_use_count        Int                 @default(0)
+    car_mileage             Int                 @default(0)
+    parts_list              Int[]
+    equip_parts_count       Int
+}
+
+
+// Story
+model story {
+    id                      Int                 @id @default(autoincrement())
+    
+    user                    user                @relation(fields: [user_id], references: [id])
+    user_id                 Int
+
+    story_type              Int
+    chapter                 Int
+    loop_count              Int
+    episode_data            storyEpisode[]
+}
+
+
+// Story Course
+model storyCourse {
+    id                      Int                 @id @default(autoincrement())
+    
+    user                    user                @relation(fields: [user_id], references: [id])
+    user_id                 Int
+
+    course_id               Int                 @default(0)
+    count                   Int                 @default(0)
+}
+
+
+// Story Episode
+model storyEpisode {
+    id                      Int                 @id @default(autoincrement())
+    
+    story                   story               @relation(fields: [story_id], references: [id])
+    story_id                Int
+
+    episode                 Int
+    play_status             Int
+    difficulty              Int
+    play_count              Int
+    clear_count             Int
+    play_score              Int
+}
+
+
+// Stock
+model stock {
+    id                                  Int                 @id @default(autoincrement())
+
+    mytitle_list                        String?
+    mytitle_new_list                    String?
+    avatar_face_list                    String
+    avatar_face_new_list                String
+    avatar_eye_list                     String
+    avatar_eye_new_list                 String
+    avatar_hair_list                    String
+    avatar_hair_new_list                String
+    avatar_body_list                    String
+    avatar_body_new_list                String
+    avatar_mouth_list                   String
+    avatar_mouth_new_list               String
+    avatar_glasses_list                 String
+    avatar_glasses_new_list             String
+    avatar_face_accessory_list          String
+    avatar_face_accessory_new_list      String
+    avatar_body_accessory_list          String
+    avatar_body_accessory_new_list      String
+    avatar_behind_list                  String
+    avatar_behind_new_list              String
+    avatar_bg_list                      String
+    avatar_bg_new_list                  String
+    avatar_effect_list                  String
+    avatar_effect_new_list              String
+    avatar_special_list                 String
+    avatar_special_new_list             String
+    stamp_list                          String?
+    stamp_new_list                      String?
+    keyholder_list                      String?
+    keyholder_new_list                  String?
+    papercup_list                       String?
+    papercup_new_list                   String?
+    tachometer_list                     String?
+    tachometer_new_list                 String?
+    aura_list                           String?
+    aura_new_list                       String?
+    aura_color_list                     String?
+    aura_color_new_list                 String?
+    aura_line_list                      String?
+    aura_line_new_list                  String?
+    bgm_list                            String?
+    bgm_new_list                        String?
+    dx_color_list                       String?
+    dx_color_new_list                   String?
+    start_menu_bg_list                  String?
+    start_menu_bg_new_list              String?
+    under_neon_list                     String?
+}
+
+
+// User's Time Trial Point
+model timetrialPoint {
+    id                  Int         @id @default(autoincrement())
+
+    user                user        @relation(fields: [user_id], references: [id])
+    user_id             Int
+
+    timetrial_event_id  Int
+    point               Int
+}
+
+
+// Mission Data
+model mission {
+    id                  Int         @id @default(autoincrement())
+
+    mission_id          Int         @default(0)
+    achieve_flag        Int         @default(0)
+    received_flag       Int         @default(0)
+    update_dt           Int         @default(0)
+}
+
+
+// Toppatu Event Data
+model toppatuEvent {
+    id                  Int         @id @default(autoincrement())
+
+    event_id            Int         @default(0)
+    count1              Int         @default(0)
+    count2              Int         @default(0)
+    count3              Int         @default(0)
+    accept_flag         Int         @default(0)
+}
+
+
+// Time Trial Event Data
+model timetrialEvent {
+    id                  Int         @id @default(autoincrement())
+    timetrial_event_id  Int
+    name                String
+    start_dt            Int
+    end_dt              Int
+    course_id           Int
+    point               Int[]
+
+    reward              timetrialRewardEvent[]
+}
+
+
+// Time Trial Reward Event Data
+model timetrialRewardEvent {
+    id                  Int                 @id @default(autoincrement())
+
+    timetrial_event     timetrialEvent      @relation(fields: [timetrial_event_id], references: [id])
+    timetrial_event_id  Int
+
+    reward_category_a   Int
+    reward_type_a       Int
+    reward_category_b   Int
+    reward_type_b       Int
+}
+
+
+// Event Data
+model event {
+    id                          Int         @id @default(autoincrement())
+
+    event_id                    Int         @default(0)
+    active_event_id             Int         @default(0)
+    dialog_show_date            Int         @default(0)
+    show_start_dialog_flag      Int         @default(1)
+    show_progress_dialog_flag   Int         @default(1)
+    show_end_dialog_flag        Int         @default(1)
+    end_event_id                Int         @default(0)
+}
+
+
+// Login Bonus
+model loginBonus {
+    id                  Int         @id @default(autoincrement())
+
+    gacha_id            Int         @default(0)
+    gacha_item_id       Int         @default(0)
+    category            Int         @default(0)
+    type                Int         @default(0)
+}
+
+
+// Frozen Data
+model frozen {
+    id                  Int         @id @default(autoincrement())
+
+    frozen_status       Int         @default(0)
+}
+
+
+// Penalty Data
+model penalty {
+    id                  Int         @id @default(autoincrement())
+
+    penalty_flag        Int         @default(0)
+    penalty_2_level     Int         @default(0)
+}
+
+
+// Config Data
+model config {
+    id                          Int         @id @default(autoincrement())
+
+    steering_intensity          Int         @default(4)
+    transmission_type           Int         @default(0)
+    default_viewpoint           Int         @default(1)
+    favorite_bgm                Int         @default(0)
+    bgm_volume                  Int         @default(7)
+    se_volume                   Int         @default(7)
+    master_volume               Int         @default(7)
+    store_battle_policy         Int         @default(0)
+    battle_onomatope_display    Int         @default(1)
+    cornering_guide             Int         @default(1)
+    minimap                     Int         @default(2)
+    line_guide                  Int         @default(1)
+    ghost                       Int         @default(0)
+    race_exit                   Int         @default(1)
+    result_skip                 Int         @default(0)
+    stamp_select_skip           Int         @default(0)
+}
+
+
+// Ticket Data
+model ticket {
+    id                  Int         @id @default(autoincrement())
+
+    user_id             Int
+    ticket_id           Int
+    ticket_cnt          Int         @default(0)
+}
+
+
+// Stamp Event Data
+model stampEvent {
+    id                                  Int         @id @default(autoincrement())
+
+    m_stamp_event_id                    Int
+    select_flag                         Int         @default(0)
+    stamp_masu                          Int         @default(0)
+    daily_bonus                         Int         @default(0)
+    weekly_bonus                        Int         @default(0)
+    weekday_bonus                       Int         @default(0)
+    weekend_bonus                       Int         @default(0)
+    total_bonus                         Int         @default(0)
+    day_total_bonus                     Int         @default(0)
+    store_battle_bonus                  Int         @default(0)
+    story_bonus                         Int         @default(0)
+    online_battle_bonus                 Int         @default(0)
+    timetrial_bonus                     Int         @default(0)
+    fasteststreetlegaltheory_bonus      Int         @default(0)
+    collaboration_bonus                 Int         @default(0)
+    add_bonus_daily_flag_1              Int         @default(0)
+    add_bonus_daily_flag_2              Int         @default(0)
+    add_bonus_daily_flag_3              Int         @default(0)
+
+    user                                user        @relation(fields: [user_id], references: [id])
+    user_id                             Int
+}
+
+
+// Time Trial Time
+model timeTrialTime {
+    id                  Int         @id @default(autoincrement())
+
+    user                user        @relation(fields: [member], references: [id])
+    member              Int
+
+    course_id           Int
+    value               Int
+    store               String
+    car_id              Int
+    style_car_id        Int
+    play_dt             Int
+    section_time_1      Int
+    section_time_2      Int
+    section_time_3      Int
+    section_time_4      Int
+    mission             Int
+}
+
+
+// Time Trial Course Skill
+model timeTrialCourseSkill {
+
+    id                  Int         @id @default(autoincrement())
+
+    user                user        @relation(fields: [member], references: [id])
+    member              Int
+
+    course_id           Int
+    run_counts          Int         @default(0)
+    skill_level_exp     Int
+}
+
+
+// Special Mode
+model specialModeResult {
+    id                      Int         @id @default(autoincrement())
+
+    user                    user        @relation(fields: [user_id], references: [id])
+    user_id                 Int
+
+    style_car_id            Int
+    story_type              Int
+    vs_type                 Int
+    play_difficulty         Int
+    cleared_difficulty      Int
+    weak_difficulty         Int
+    eval_id                 Int
+    advantage               Int
+    sec1_advantage_avg      Int
+    sec2_advantage_avg      Int
+    sec3_advantage_avg      Int?
+    sec4_advantage_avg      Int?
+    nearby_advantage_rate   Int
+    win_flag                Int
+    result                  Int
+    record                  Int
+    course_id               Int
+    last_play_course_id     Int
+    course_day              Int
+    hint_display_flag       Int
+    play_dt                 Int         @default(0)
+    store                   String      @default("Bayshore")
+}
+
+
+// Challenge Mode
+model challengeModeResult {
+    id                      Int         @id @default(autoincrement())
+
+    user                    user        @relation(fields: [user_id], references: [id])
+    user_id                 Int
+
+    style_car_id            Int
+    story_type              Int
+    vs_type                 Int
+    play_difficulty         Int
+    cleared_difficulty      Int
+    eval_id                 Int
+    advantage               Int
+    sec1_advantage_avg      Int
+    sec2_advantage_avg      Int
+    sec3_advantage_avg      Int?
+    sec4_advantage_avg      Int?
+    nearby_advantage_rate   Int
+    win_flag                Int
+    result                  Int
+    record                  Int
+    course_id               Int
+    last_play_course_id     Int
+    course_day              Int
+    play_dt                 Int         @default(0)
+    store                   String      @default("Bayshore")
+}
+
+
+// Theory Data
+model theoryData {
+    id                          Int         @id @default(autoincrement())
+
+    user                        user        @relation(fields: [user_id], references: [id])
+    user_id                     Int
+
+    play_count                  Int
+    play_count_multi            Int
+    partner_id                  Int
+    partner_progress            Int
+    partner_progress_score      Int
+    practice_start_rank         Int
+    general_flag                Int
+    vs_history                  Int
+    vs_history_multi            Int
+    win_count                   Int
+    win_count_multi             Int
+}
+
+
+// Theory Couse Mode
+model theoryCourseData {
+    id                          Int         @id @default(autoincrement())
+
+    user                        user        @relation(fields: [user_id], references: [id])
+    user_id                     Int
+
+    course_id                   Int
+    max_victory_grade           Int
+    run_count                   Int
+    powerhouse_lv               Int
+    powerhouse_exp              Int
+    played_powerhouse_lv        Int
+    update_dt                   Int
+}
+
+
+// Theory Partner Mode
+model theoryPartnerData {
+    id                          Int         @id @default(autoincrement())
+
+    user                        user        @relation(fields: [user_id], references: [id])
+    user_id                     Int
+
+    partner_id                  Int
+    fellowship_lv               Int
+    fellowship_exp              Int
+}
+
+
+// Theory Running Pram Mode
+model theoryRunningPramData {
+    id                          Int         @id @default(autoincrement())
+
+    user                        user        @relation(fields: [user_id], references: [id])
+    user_id                     Int
+
+    course_id                   Int
+    attack                      Int
+    defense                     Int
+    safety                      Int
+    runaway                     Int
+    trick_flag                  Int
+}
