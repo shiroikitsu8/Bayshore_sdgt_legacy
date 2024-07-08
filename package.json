@@ -8,8 +8,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "dev": "tsc && node dist",
-    "build_protos": "tsc -p ./tsconfig.proto.json"
+    "dev": "tsc && node dist"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
