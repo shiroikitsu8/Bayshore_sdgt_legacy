@@ -5,8 +5,6 @@
 	"placeId": "701",
 	"regionId": "701",
     "serverIp": "127.0.0.1",
-    "website": 0,
-    "websiteLog": 0,
     "gameOptions": {
         "newCardsBanned": 1
     }

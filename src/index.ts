@@ -40,19 +40,16 @@ const PORT_VS =  process.env.VERSUS_PORT !== undefined ? parseInt(process.env.VE
 const PORT_P2P =  process.env.P2P_PORT !== undefined ? parseInt(process.env.P2P_PORT) : 84;
 const PORT_ECHO1 =  process.env.ECHO1_PORT !== undefined ? parseInt(process.env.ECHO1_PORT) : 82;
 const PORT_ECHO2 =  process.env.ECHO2_PORT !== undefined ? parseInt(process.env.ECHO2_PORT) : 83;
-const PORT_WEB =  process.env.WEBSITE_PORT !== undefined ? parseInt(process.env.WEBSITE_PORT) : 88;
 
 // Router
 const appRouter = Router();
 const appRouter_vs = Router();
-const appRouter_web = Router();
 
 // Express
 const allnetApp = express();
 const muchaApp = express();
 const vsApp = express();
 const vsp2pApp = express();
-const websiteApp = express();
 
 // Sentry
 let useSentry = !!Config.getConfig().sentryDsn;
@@ -90,15 +87,6 @@ muchaApp.use((req, res, next) => {
 
 vsApp.use((req, res, next) => {
     common.writeLog(`${req.method} ${req.url}`, common.event.versus);
-    next()
-});
-
-websiteApp.use((req, res, next) => {
-    let websiteLog = Config.getConfig().websiteLog || 0;
-    if(websiteLog)
-    {
-        common.writeLog(`${req.method} ${req.url}`, common.event.website);
-    }
     next()
 });
 

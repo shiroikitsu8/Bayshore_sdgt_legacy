@@ -13,6 +13,7 @@ import addHours from "date-fns/addHours";
 const STARTUP_URI = `http://${Config.getConfig().serverIp || "localhost"}:80`;
 const STARTUP_HOST = `${Config.getConfig().serverIp || "localhost"}:80`;
 
+
 export default class AllnetModule extends Module {
     register(app: Application): void {
         
@@ -94,9 +95,9 @@ export default class AllnetModule extends Module {
             const isoStr = isoStrWithMs.substr(0, 19) + "Z";
 
             let shopName = Config.getConfig().shopName || 'Bayshore';
-            let placeId = Config.getConfig().placeId || 'IDN0123';
+            let placeId = Config.getConfig().placeId || 701;
             let country = Config.getConfig().country || 'IDN';
-            let regionId = Config.getConfig().regionId || '701';
+            let regionId = Config.getConfig().regionId || 701;
 
             // Response Data
             const resParams = {
